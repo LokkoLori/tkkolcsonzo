@@ -14,7 +14,6 @@
       <div class="font-medium">{{ item.title }}</div>
       <div class="text-sm text-gray-500 mb-2">{{ item.category }}</div>
       <div class="flex gap-2">
-        <a href="{% url 'core:item_detail' item.pk %}" class="text-sm underline">Megnyitás</a>
         <a href="{% url 'core:item_detail' item.pk %}?edit=1" class="text-sm underline">Szerkesztés</a>
         <a href="{% url 'core:item_delete' item.pk %}" class="text-sm underline text-red-700">Törlés</a>
       </div>

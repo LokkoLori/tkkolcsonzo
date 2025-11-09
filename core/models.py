@@ -46,6 +46,14 @@ class Item(models.Model):
             Loan.State.HANDED_OVER,
         ]).exists()
 
+    @property
+    def in_loan(self):
+        return self.loans.filter(state__in=[
+            Loan.State.REQUESTED,
+            Loan.State.ACCEPTED,
+            Loan.State.HANDED_OVER,
+        ]).first()
+
     def cover_image(self):
         # first cover if exists
         return self.images.filter(is_cover=True).first()

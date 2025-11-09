@@ -7,6 +7,14 @@
         {{ item.owner.profile }}
       </a>
     </div>
+    {% if item.in_loan %}
+      <div class="text-gray-600">Kikölcsönző:
+        <a href="{% url 'core:profile_detail' item.in_loan.borrower %}" class="underline">
+          {{ item.in_loan.borrower.profile }}
+        </a>
+      </div>
+    {% endif %}
   {% endif %}
+
   <p class="whitespace-pre-line">{{ item.description }}</p>
 </div>

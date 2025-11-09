@@ -1,7 +1,7 @@
 <div class="p-4 bg-white rounded shadow">
   <div class="font-medium mb-1">{{ loan.item.title }}</div>
   <div class="text-sm text-gray-600 mb-2">Tulajdonos: {{ loan.item.owner.username }}</div>
-  <div class="text-sm text-gray-600 mb-2">Igénylő: {{ loan.borrower.username }}</div>
+  <div class="text-sm text-gray-600 mb-2">Kikölcsönző: {{ loan.borrower.username }}</div>
   <div class="text-sm text-gray-600 mb-2">Státusz: {{ loan.get_state_display }}</div>
 
   <div class="mt-3 text-xs text-gray-600 space-y-1">
@@ -30,6 +30,8 @@
     {% if user == loan.borrower %}
       {% if loan.state == 'REQUESTED' or loan.state == 'ACCEPTED' %}
         <a href="{% url 'core:loan_cancel' loan.id %}" class="px-3 py-1 bg-orange-700 text-white rounded">Lemondás</a>
+      {% elif loan.state == 'HANDED_OVER' %}
+        <div class="mt-3 text-sm text-orange-600">Nálad van!</div>
       {% endif %}
     {% endif %}
   </div>

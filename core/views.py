@@ -5,7 +5,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.db.models import Q
 from django.template.loader import render_to_string
-from django.middleware.csrf import get_token
 from django.http import HttpResponseBadRequest, HttpResponse
 from django.views.decorators.http import require_POST
 from django.urls import reverse
@@ -266,8 +265,6 @@ def profile_edit(request):
         form = UserProfileForm(instance=profile)
 
     return render(request, "account/profile.html", {"form": form})
-
-
 
 def _require_verified(request):
     # Simple gate: only verified can view others' profiles
