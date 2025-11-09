@@ -1,0 +1,37 @@
+<div class="p-4 bg-white rounded shadow">
+  <div class="font-medium mb-1">{{ loan.item.title }}</div>
+  <div class="text-sm text-gray-600 mb-2">Tulajdonos: {{ loan.item.owner.username }}</div>
+  <div class="text-sm text-gray-600 mb-2">Igénylő: {{ loan.borrower.username }}</div>
+  <div class="text-sm text-gray-600 mb-2">Státusz: {{ loan.get_state_display }}</div>
+
+  <div class="mt-3 text-xs text-gray-600 space-y-1">
+    {% with r=loan.requested_at a=loan.accepted_at h=loan.handed_over_at ret=loan.returned_at d=loan.declined_at c=loan.cancelled_at %}
+      {% if r %}<div>Igényelve: {{ r|date:"Y.m.d H:i" }}</div>{% endif %}
+      {% if a %}<div>Elfogadva: {{ a|date:"Y.m.d H:i" }}</div>{% endif %}
+      {% if h %}<div>Átadva: {{ h|date:"Y.m.d H:i" }}</div>{% endif %}
+      {% if ret %}<div>Visszahozva: {{ ret|date:"Y.m.d H:i" }}</div>{% endif %}
+      {% if d %}<div>Elutasítva: {{ d|date:"Y.m.d H:i" }}</div>{% endif %}
+      {% if c %}<div>Lemondva: {{ c|date:"Y.m.d H:i" }}</div>{% endif %}
+    {% endwith %}
+  </div>
+
+  <div class="flex gap-2 flex-wrap">
+    {% if user == loan.item.owner %}
+      {% if loan.state == 'REQUESTED' %}
+        <a href="{% url 'core:loan_accept' loan.id %}" class="px-3 py-1 bg-green-700 text-white rounded">Elfogadás</a>
+        <a href="{% url 'core:loan_decline' loan.id %}" class="px-3 py-1 bg-red-700 text-white rounded">Elutasítás</a>
+      {% elif loan.state == 'ACCEPTED' %}
+        <a href="{% url 'core:loan_hand_over' loan.id %}" class="px-3 py-1 bg-blue-700 text-white rounded">Átadás megtörtént</a>
+      {% elif loan.state == 'HANDED_OVER' %}
+        <a href="{% url 'core:loan_mark_returned' loan.id %}" class="px-3 py-1 bg-gray-900 text-white rounded">Visszahozva</a>
+      {% endif %}
+    {% endif %}
+
+    {% if user == loan.borrower %}
+      {% if loan.state == 'REQUESTED' or loan.state == 'ACCEPTED' %}
+        <a href="{% url 'core:loan_cancel' loan.id %}" class="px-3 py-1 bg-orange-700 text-white rounded">Lemondás</a>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+

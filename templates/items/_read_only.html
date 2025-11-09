@@ -1,0 +1,12 @@
+<div id="item-info" class="space-y-2">
+  <h1 class="text-2xl font-semibold">{{ item.title }}</h1>
+  <div class="text-gray-600">Kategória: {{ item.category }}</div>
+  {% if request.user.is_authenticated and request.user.profile.verified %}
+    <div class="text-gray-600">Tulajdonos:
+      <a href="{% url 'core:profile_detail' item.owner.username %}" class="underline">
+        {{ item.owner.profile }}
+      </a>
+    </div>
+  {% endif %}
+  <p class="whitespace-pre-line">{{ item.description }}</p>
+</div>

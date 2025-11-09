@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-xl font-semibold mb-4">{{ title|default:'Új holmi' }}</h1>
+<form method="post" enctype="multipart/form-data" class="space-y-4">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="px-4 py-2 bg-black text-white rounded">Mentés</button>
+</form>
+{% endblock %}

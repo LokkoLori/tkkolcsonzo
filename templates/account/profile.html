@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-2xl font-semibold mb-4">Profilom</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <div>
+    <div class="bg-white rounded shadow p-4">
+      <div class="text-sm text-gray-600 mb-2">Jelenlegi profilkép</div>
+      {% if request.user.profile.avatar %}
+        <img src="{{ request.user.profile.avatar.url }}" class="w-full rounded mb-3" />
+      {% else %}
+        <div class="w-full h-48 bg-gray-200 rounded mb-3"></div>
+      {% endif %}
+      <div class="text-sm text-gray-600">Felhasználó: <span class="font-medium">{{ request.user.username }}</span></div>
+    </div>
+  </div>
+
+  <div class="md:col-span-2">
+    <form method="post" enctype="multipart/form-data" class="space-y-4 bg-white rounded shadow p-4">
+      {% csrf_token %}
+      <div class="space-y-3">
+        <div>
+          <label class="block text-sm text-gray-600 mb-1" for="id_display_name">Megjelenített név</label>
+          {{ form.display_name }}
+        </div>
+
+        <div>
+          <label class="block text-sm text-gray-600 mb-1" for="id_phone">Telefon</label>
+          {{ form.phone }}
+        </div>
+
+        <div>
+          <label class="block text-sm text-gray-600 mb-1" for="id_location">Cím</label>
+          {{ form.address }}
+        </div>
+
+        <div>
+          <label class="block text-sm text-gray-600 mb-1" for="id_about">Bemutatkozás</label>
+          {{ form.about }}
+        </div>
+
+        <div>
+          <label class="block text-sm text-gray-600 mb-1" for="id_avatar">Profilkép</label>
+          {{ form.avatar }}
+        </div>
+      </div>
+      <button class="px-4 py-2 bg-black text-white rounded">Mentés</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

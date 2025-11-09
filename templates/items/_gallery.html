@@ -1,0 +1,39 @@
+{% include "items/_main_image.html" with item=item oob=1 %}
+
+<div class="mt-2 grid grid-cols-6 gap-2">
+  {% for img in item.images.all %}
+    <div class="relative group">
+      <img
+        src="{{ img.image.url }}"
+        data-fullsrc="{{ img.image.url }}"
+        class="thumb h-20 w-full object-cover rounded cursor-pointer hover:opacity-80 transition {% if img.is_cover %}ring-4 ring-black{% endif %}"
+        onclick="selectImage(this)"
+      />
+      {% if request.user == item.owner %}
+        <div class="absolute inset-0 flex items-start justify-end gap-1 p-1
+            opacity-100 md:opacity-0 md:group-hover:opacity-100 transition
+            pointer-events-none">
+          <form method="post"
+                hx-post="{% url 'core:item_image_set_cover_hx' item.pk img.pk %}"
+                hx-target="#gallery" hx-swap="innerHTML"
+                class="pointer-events-auto">
+            {% csrf_token %}
+            <button class="px-2 py-1 text-xs bg-black/70 text-white rounded">Borító</button>
+          </form>
+          <form method="post"
+                hx-post="{% url 'core:item_image_delete_hx' item.pk img.pk %}"
+                hx-target="#gallery" hx-swap="innerHTML"
+                class="pointer-events-auto">
+            {% csrf_token %}
+            <button class="px-2 py-1 text-xs bg-red-700 text-white rounded">Törlés</button>
+          </form>
+        </div>
+      {% endif %}
+      {% if img.is_cover %}
+        <div class="absolute bottom-1 left-1 text-[10px] px-1 py-[1px] bg-white/80 rounded">Borító</div>
+      {% endif %}
+    </div>
+  {% empty %}
+    <div class="col-span-6 text-sm text-gray-500">Még nincs feltöltött kép.</div>
+  {% endfor %}
+</div>

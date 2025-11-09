@@ -1,0 +1,9 @@
+<div id="main-image-container" {% if oob %}hx-swap-oob="true"{% endif %}>
+  {% with img=item.main_image %}
+    {% if img %}
+      <img id="main-image" src="{{ img.image.url }}" class="w-full rounded" />
+    {% else %}
+      <div class="w-full h-64 bg-gray-200 rounded"></div>
+    {% endif %}
+  {% endwith %}
+</div>

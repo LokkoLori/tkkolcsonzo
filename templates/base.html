@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TKKölcsönző</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <header class="bg-white shadow">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="/" class="font-bold text-xl">TKKölcsönző</a>
+      {% if user.is_authenticated %}
+      Üdv {{ user.profile }}!
+      {% endif %}
+      <nav class="space-x-4">
+        {% if user.is_authenticated %}
+          {% if user.profile.verified %}
+            <a href="{% url 'core:my_items' %}" class="text-sm">Saját holmik</a>
+            <a href="{% url 'core:my_loans' %}" class="text-sm">Kölcsönzéseim</a>
+          {% endif %}
+          <a href="{% url 'core:profile_edit' %}" class="text-sm">Profilom</a>
+          <form method="post" action="{% url 'logout' %}" class="inline">
+            {% csrf_token %}
+            <button class="text-sm">Kijelentkezés</button>
+          </form>
+        {% else %}
+          <a href="{% url 'login' %}" class="text-sm">Bejelentkezés</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 py-6">
+    {% include '_messages.html' %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

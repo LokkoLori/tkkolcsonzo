@@ -1,0 +1,9 @@
+<form method="post" enctype="multipart/form-data"
+      hx-post="{% url 'core:item_image_add_hx' item.pk %}"
+      hx-target="#gallery"
+      hx-swap="innerHTML"
+      class="space-y-2 border p-3 rounded bg-white">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="px-3 py-2 bg-black text-white rounded">Kép feltöltése</button>
+</form>

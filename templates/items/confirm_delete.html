@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-xl font-semibold mb-4">Holmi törlése</h1>
+<p class="mb-4">Biztosan törlöd ezt a holmit: <strong>{{ item.title }}</strong>?</p>
+<form method="post">
+  {% csrf_token %}
+  <button class="px-4 py-2 bg-red-700 text-white rounded">Igen, törlöm</button>
+  <a href="{% url 'core:item_detail' item.pk %}" class="ml-2 px-4 py-2 bg-gray-200 rounded">Mégse</a>
+</form>
+{% endblock %}

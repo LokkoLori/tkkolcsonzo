@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-2xl font-semibold mb-4">Saját holmik</h1>
+<a href="{% url 'core:item_create' %}" class="inline-block mb-4 px-3 py-2 bg-black text-white rounded">Új holmi</a>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  {% for item in items %}
+  <div class="bg-white rounded shadow">
+    {% if item.images.first %}
+      <img src="{{ item.images.first.image.url }}" class="w-full h-40 object-cover rounded-t" />
+    {% else %}
+      <div class="w-full h-40 bg-gray-200 rounded-t"></div>
+    {% endif %}
+    <div class="p-3">
+      <div class="font-medium">{{ item.title }}</div>
+      <div class="text-sm text-gray-500 mb-2">{{ item.category }}</div>
+      <div class="flex gap-2">
+        <a href="{% url 'core:item_detail' item.pk %}" class="text-sm underline">Megnyitás</a>
+        <a href="{% url 'core:item_detail' item.pk %}?edit=1" class="text-sm underline">Szerkesztés</a>
+        <a href="{% url 'core:item_delete' item.pk %}" class="text-sm underline text-red-700">Törlés</a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+    <p>Még nincs egyetlen holmid sem.</p>
+  {% endfor %}
+</div>
+{% endblock %}

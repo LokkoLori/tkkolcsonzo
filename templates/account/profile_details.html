@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-2xl font-semibold mb-4">Felhasználói profil</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <div class="bg-white rounded shadow p-4">
+    <div class="text-sm text-gray-500 mb-2">Profilkép</div>
+    {% if owner.profile.avatar %}
+      <img src="{{ owner.profile.avatar.url }}" class="w-full rounded mb-3" />
+    {% else %}
+      <div class="w-full h-48 bg-gray-200 rounded mb-3"></div>
+    {% endif %}
+    <div class="text-sm"><span class="text-gray-500">Név:</span> {{ owner.profile.display_name|default:"—" }}</div>
+    <div class="text-sm"><span class="text-gray-500">Cím:</span> {{ owner.profile.address|default:"—" }}</div>
+    <div class="text-sm"><span class="text-gray-500">Telefon:</span> {{ owner.profile.phone|default:"—" }}</div>
+  </div>
+
+  <div class="md:col-span-2 bg-white rounded shadow p-4">
+    <div class="text-sm text-gray-500 mb-2">Bemutatkozás</div>
+    <div class="whitespace-pre-line">{{ owner.profile.about|default:"(nincs megadva)" }}</div>
+
+    <div class="mt-6">
+      <a href="{% url 'core:owner_items' owner.username %}" class="underline">Összes holmi megtekintése</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-2xl font-semibold mb-4">Holmik böngészése</h1>
+<form method="get" class="flex gap-2 mb-4">
+  <input type="text" name="q" value="{{ q }}" placeholder="Keresés címre/leírásra"
+         class="border rounded px-3 py-2 w-full" />
+  <input type="text" name="category" value="{{ category }}" placeholder="Kategória"
+         class="border rounded px-3 py-2" />
+  <button class="px-4 py-2 bg-black text-white rounded">Szűrés</button>
+</form>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  {% for item in items %}
+  <a href="{% url 'core:item_detail' item.pk %}" class="block bg-white rounded shadow hover:shadow-md">
+    {% if item.main_image %}
+      <img src="{{ item.main_image.image.url }}" alt="{{ item.title }}" class="w-full h-48 object-cover rounded-t" />
+    {% else %}
+      <div class="w-full h-48 bg-gray-200 rounded-t"></div>
+    {% endif %}
+    <div class="p-3">
+      <div class="font-medium">{{ item.title }}</div>
+      <div class="text-sm text-gray-500">{{ item.category }}</div>
+    </div>
+  </a>
+  {% empty %}
+  <p>Nincs elérhető holmi.</p>
+  {% endfor %}
+</div>
+{% endblock %}

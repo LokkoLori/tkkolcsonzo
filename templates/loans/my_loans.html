@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 class="text-lg font-semibold mb-2">Kölcsönzéseim</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+  {% for loan in loans_as_borrower %}
+    {% include 'loans/partials/loan_card.html' with loan=loan %}
+  {% empty %}
+    <p>Nincs kölcsönzés.</p>
+  {% endfor %}
+</div>
+
+<h2 class="text-lg font-semibold mb-2">Kölcsönadások</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+  {% for loan in loans_as_owner %}
+    {% include 'loans/partials/loan_card.html' with loan=loan %}
+  {% empty %}
+    <p>Nincs kölcsönzés.</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+<div id="item-info">
+  <form method="post"
+        hx-post="{% url 'core:item_edit_inline' item.pk %}"
+        hx-target="#item-info"
+        hx-swap="outerHTML"
+        class="space-y-3">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="flex gap-2">
+      <button class="px-3 py-2 bg-black text-white rounded">Mentés</button>
+      <a href="{% url 'core:item_detail' item.pk %}" class="px-3 py-2 bg-gray-200 rounded">
+        Mégse
+      </a>
+    </div>
+  </form>
+</div>
